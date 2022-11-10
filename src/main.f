@@ -172,7 +172,6 @@ c      Conditions for square normalizability
       ANOR1=alfa12*c12/d12+alfa13-alfa1
       ANOR2=alfa12*c12/d12+alfa23-alfa2
       ANOR3=alfa13+alfa23-alfa3*c3/d3
-c      WRITE(*,*),'flag',ANOR1,ANOR2
 
 
       IF ((ANOR1 .GT. 0) .OR.  (ANOR2 .GT. 0) .OR. (ANOR3 .GT. 0)) THEN
@@ -822,16 +821,16 @@ c    $ ----- Total associated potential ----------
 
 c     Calculating Psi^prime_p
       
-c$$$      psip(2) = - r1*psi(1)
-c$$$      psip(3) = - r2*psi(1)
-c$$$      psip(4) = - r3*((1+c3*r3)/(1+d3*r3))*psi(1)
-c$$$      psip(5) = - (al3*r3**2/(1+d3*r3))*psi(1)
-c$$$      psip(6) = (al3*r3**2*(1+c3*r3)/(1+d3*r3)**2)*psi(1)
-c$$$      psip(7) =  r12*((1+c12*r12)/(1+d12*r12))*psi(1)
-c$$$      psip(8) =  (al12*r12**2/(1+d12*r12))*psi(1)
-c$$$      psip(9) = - (al12*r12**2*(1+c12*r12)/(1+d12*r12)**2)*psi(1)
-c$$$      psip(10) = r13*psi(1)
-c$$$      psip(11) = r23*psi(1)
+      psip(2) = - r1*psi(1)
+      psip(3) = - r2*psi(1)
+      psip(4) = - r3*((1+c3*r3)/(1+d3*r3))*psi(1)
+      psip(5) = - (al3*r3**2/(1+d3*r3))*psi(1)
+      psip(6) = (al3*r3**2*(1+c3*r3)/(1+d3*r3)**2)*psi(1)
+      psip(7) =  r12*((1+c12*r12)/(1+d12*r12))*psi(1)
+      psip(8) =  (al12*r12**2/(1+d12*r12))*psi(1)
+      psip(9) = - (al12*r12**2*(1+c12*r12)/(1+d12*r12)**2)*psi(1)
+      psip(10) = r13*psi(1)
+      psip(11) = r23*psi(1)
 
       if (abs(1+a*r2)> 0.000001) then
           psip(1) =  1.0*(r2/(1+a*r2))*psi(1)
@@ -856,277 +855,276 @@ c$$$      psip(11) = r23*psi(1)
 c     Calculating K_psi_p
 
 
-      
-c$$$      aK(2)= 0.5*psi(1)*(2/r1) + ! Laplacian ends here
-c$$$     & psi(1)*((z1*(-((al1*z1)/r1)+(al12*(z1-z2)*(1+c12*d12*(rho1**2
-c$$$     & + rho2**2+(z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 
-c$$$     & 2*c12*r12))/(r12*(1 + d12*r12)**2) + (al13*(z1 - z3))/r13))/r1 + 
-c$$$     & (rho1*(-((al1*rho1)/r1)-(al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*
-c$$$     & (1 + c12*r12))/(1 + d12*r12)**2 + 
-c$$$     & (al12*(rho1-rho2*Cos(phi1-phi2))*(1+c12*r12))/(r12*(1+d12*r12))
-c$$$     & + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/(1 + d12*r12) + 
-c$$$     & (al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13))/r1)
-c$$$
-c$$$      aK(3)= 0.5*psi(1)*(2/r2) + ! Laplacian ends here
-c$$$     & psi(1)*((z3*(rho2*(2*a*rho2*r12*(1 + d12*r12)**2*r23 + 
-c$$$     & (1 + a*r2)*(2*al23*r2*r12*(1 + d12*r12)**2*(rho2 - rho3*
-c$$$     & Cos(phi2 - phi3)) - 2*al12*d12*r2*(rho2-rho1*Cos(phi1 - phi2))*
-c$$$     & r12*(1+c12*r12)*r23+2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
-c$$$     & (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
-c$$$     & (1 + c12*r12)*(1 + d12*r12)*r23 - 2*al2*rho2*r12*
-c$$$     & (1 + d12*r12)**2*r23)) + 2*z2*(a*z2*r12*(1 + d12*r12)**2*
-c$$$     & r23 + (1 + a*r2)*(al23*r2*(z2 - z3)*r12*(1 + d12*r12)**2 + 
-c$$$     & al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*r23 - 
-c$$$     & al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*r23 - al12*(z1 - z2)*r2*
-c$$$     & (1 + c12*r12)*(1 + d12*r12)*r23 - al2*z2*r12*(1+d12*r12)**2*
-c$$$     & r23))))/(2.*(rho2**2+z2**2)*(z3+a*r2*z3)*r12*(1+d12*r12)**2*r23))
-c$$$      
-c$$$      aK(4)= 0.5*psi(1)*((2+2*c3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))
-c$$$     & /(r3*(1 + d3*r3)**3)) + ! Laplacian ends here
-c$$$     & psi(1)*(((1 + 2*c3*r3+c3*d3*(r3**2))*((r3 + d3**2*(r3**2)**1.5 -
-c$$$     & d3*(r3**2)*(-2 + al3*c3*z3**2) - al3*z3**2*(1 + 2*c3*r3) + 
-c$$$     & (al13*z3*(-z1 + z3)*(r3 + 2*d3*(r3**2)+d3**2*(r3**2)**1.5))/r13+ 
-c$$$     & (al23*z3*(-z2 + z3)*(r3 + 2*d3*(r3**2) + d3**2*(r3**2)**1.5))/
-c$$$     & r23)/(r3**2) + (rho3*(1 + d3*r3)**2*((al3*d3*rho3*(1 + c3*r3))/
-c$$$     & (1 + d3*r3)**2 - (al3*c3*rho3)/(1 + d3*r3) -(al3*rho3*(1+c3*r3))/
-c$$$     & (r3 + d3*(r3**2)) + (al13*(rho3 - rho1*Cos(phi1 - phi3)))/r13 + 
-c$$$     & (al23*(rho3 - rho2*Cos(phi2 - phi3)))/r23))/r3))/(1 + d3*r3)**4)
-c$$$      
-c$$$      aK(5)= 0.5*psi(1)*((2*al3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))/
-c$$$     & (r3*(1 + d3*r3)**3)) ! Laplacian ends here
-c$$$     & + psi(1)*((al3*(-2*al3*d3**2*rho3**2*r3*(1 + c3*r3)
-c$$$     & + 2*al3*c3*d3*rho3**2*r3*(1 + d3*r3) +6*al3*d3*rho3**2*(1+c3*r3)*
-c$$$     & (1 + d3*r3) - 2*d3*r3*(1 + d3*r3)**2 + 4*(1+d3*r3)**3 -
-c$$$     & 4*al3*c3*(rho3+d3*rho3*r3)**2-(4*al3*(1+c3*r3)*
-c$$$     & (rho3+d3*rho3*r3)**2)/r3 - (2*al13*d3*rho3*r3*(1 + d3*r3)**2*
-c$$$     & (rho3 - rho1*Cos(phi1 - phi3)))/r13 + 
-c$$$     & (4*al13*rho3*(1 + d3*r3)**3*(rho3 - rho1*Cos(phi1 - phi3)))/r13 - 
-c$$$     & (2*al23*d3*rho3*r3*(1+d3*r3)**2*(rho3 - rho2*Cos(phi2 - phi3)))/
-c$$$     & r23 + (4*al23*rho3*(1+d3*r3)**3*(rho3 - rho2*Cos(phi2 - phi3)))/
-c$$$     & r23 - 2*d3*z3*r3*(1 + d3*r3)**2*(-((al3*z3*(1 + d3*r3 + c3*(2*r3
-c$$$     & + 3*d3*(r3**2) + d3**2*(r3**2)**1.5)))/((1+d3*r3)**2*
-c$$$     & (r3+d3*(r3**2)))) + (al13*(-z1 + z3))/r13+(al23*(-z2+z3))/r23) + 
-c$$$     & 4*z3*(1 + d3*r3)**3*(-((al3*z3*(1 + d3*r3 + 
-c$$$     &  c3*(2*r3 + 3*d3*(r3**2) + d3**2*(r3**2)**1.5)))/((1 + d3*r3)**2*
-c$$$     & (r3 + d3*(r3**2)))) + (al13*(-z1 + z3))/r13 + 
-c$$$     & (al23*(-z2 + z3))/r23)))/(2.*(1 + d3*r3)**4))
-c$$$     
-c$$$
-c$$$      aK(6)= - 0.5*psi(1)*((2*al3*(3 + c3*(6*r3 + 4*d3*(r3**2)
-c$$$     &  + d3**2*(r3**2)**1.5)))/(1 + d3*r3)**4) ! Laplacian ends here
-c$$$     &  - psi(1)*((al3*(2 + 3*c3*r3 + c3*d3*(r3**2))*
-c$$$     & (al3*d3*rho3**2*(1 + c3*r3) - al3*c3*rho3**2*(1 + d3*r3) - 
-c$$$     & (al3*(1 + c3*r3)*(rho3 + d3*rho3*r3)**2)/(r3 + d3*(r3**2)) + 
-c$$$     & (al13*rho3*(1 + d3*r3)**2*(rho3 - rho1*Cos(phi1 - phi3)))/r13 + 
-c$$$     &  (r3 + d3**2*(r3**2)**1.5 - d3*(r3**2)*(-2 + al3*c3*z3**2)
-c$$$     & -al3*z3**2*(1 + 2*c3*r3) - (al13*(z1 - z3)*z3*(r3 + 2*d3*(r3**2)
-c$$$     & + d3**2*(r3**2)**1.5))/r13)/r3 + (al23*z3*(-z2 + z3)*(r3 +
-c$$$     & 2*d3*(r3**2) + d3**2*(r3**2)**1.5))/(r3*r23) +  (al23*rho3*
-c$$$     & (1 + d3*r3)**2*(rho3-rho2*Cos(phi2-phi3)))/r23))/(1+d3*r3)**5)
-c$$$      
-c$$$      aK(7)= - psi(1)*((2*(1 - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)*
-c$$$     & (3 + d12*r12)+c12*(3*d12*(rho1**2+rho2**2+(z1 - z2)**2) + 3*r12 + 
-c$$$     & d12**2*(rho1**2+rho2**2+(z1-z2)**2)*r12)))/(r12*(1+d12*r12)**3)) ! Laplacian ends here
-c$$$     &  - psi(1)*(((1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
-c$$$     &  - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)+2*c12*r12)*(((z1-z2)*
-c$$$     & (1 + d12*r12)**2*(-((al1*z1)/Sqrt(rho1**2+z1**2))+(al12*(z1-z2)*
-c$$$     & (1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) - 2*c12*d12*rho1*
-c$$$     & rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*(1 + d12*r12)**2) + 
-c$$$     & (al13*(z1 - z3))/r13))/r12 + ((rho1 - rho2*Cos(phi1 - phi2))*
-c$$$     & (1 + d12*r12)**2*(-((al1*rho1)/Sqrt(rho1**2 + z1**2)) -
-c$$$     & (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
-c$$$     & (1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/
-c$$$     & (1 + d12*r12) + (al12*(rho1 - rho2*Cos(phi1-phi2))*(1+c12*r12))/
-c$$$     & (r12*(1+d12*r12))+(al13*(rho1-rho3*Cos(phi1 - phi3)))/r13))/r12+ 
-c$$$     & (rho2*Sin(phi1 - phi2)*(al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
-c$$$     & + (z1 - z2)**2) + 2*c12*r12)*r13*Sin(phi1 - phi2) - 
-c$$$     & al12*c12*d12*rho1*rho2**2*r13*Sin(2*(phi1 - phi2)) + 
-c$$$     & al13*rho3*(2*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) + r12 + 
-c$$$     & d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 - 
-c$$$     & 2*d12*rho1*rho2*Cos(phi1-phi2)*(2 + d12*r12))*Sin(phi1 - phi3)))/
-c$$$     & ((r12**2)*r13)))/(1 + d12*r12)**4 +
-c$$$     & (z3*(-1 + 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)-c12*(d12*(rho1**2
-c$$$     & + rho2**2 + (z1 - z2)**2)+2*r12))*(-2*(rho2-rho1*Cos(phi1-phi2))*
-c$$$     & (2*a*rho2*r12*(1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
-c$$$     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) - 
-c$$$     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*(1 + c12*r12)*
-c$$$     & r23 + 2*al12*c12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
-c$$$     & (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
-c$$$     & (1 + c12*r12)*(1 + d12*r12)*r23-2*al2*rho2*r12*(1+d12*r12)**2*
-c$$$     & r23)) + 4*(z1 - z2)*(a*z2*r12*(1 + d12*r12)**2*r23 + 
-c$$$     & (1 + a*r2)*(al23*r2*(z2 - z3)*r12*(1 + d12*r12)**2 + 
-c$$$     & al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*r23 - al12*c12*(z1 - z2)*
-c$$$     & r2*r12*(1 + d12*r12)*r23 - al12*(z1 - z2)*r2*(1 + c12*r12)*
-c$$$     & (1 + d12*r12)*r23 - al2*z2*r12*(1 + d12*r12)**2*r23)) + 
-c$$$     & 4*rho1*r2*(1 + a*r2)*Sin(phi1 - phi2)*(-(al12*rho1*r23*
-c$$$     & Sin(phi1 - phi2)) - 2*al12*c12*rho1*r12*r23*Sin(phi1 - phi2) - 
-c$$$     & al12*c12*d12*rho1*(r12**2)*r23*Sin(phi1 - phi2) + 
-c$$$     & al23*rho3*r12*Sin(phi2 - phi3) + 2*al23*d12*rho3*(r12**2)*
-c$$$     & Sin(phi2-phi3)+al23*d12**2*rho3*(r12**2)**1.5*Sin(phi2-phi3))))/
-c$$$     & (4.*r2*(z3+a*r2*z3)*(rho1**2+rho2**2+(z1-z2)**2-2*rho1*rho2*
-c$$$     &     Cos(phi1 - phi2))*(1 + d12*r12)**4*r23))
-c$$$
-c$$$      aK(8) = - psi(1)*((2*al12*(3*d12*(rho1**2+rho2**2+(z1-z2)**2)
-c$$$     & + 3*r12 + d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 - 
-c$$$     & 2*d12*rho1*rho2*Cos(phi1 - phi2)*(3 + d12*r12)))/(r12*
-c$$$     &     (1 + d12*r12)**3))   ! Laplacian ends here
-c$$$     & -psi(1)*((al12*(2+d12*r12)*((z1-z2)*(-((al1*z1)/r1)+
-c$$$     & (al12*(z1 - z2)*(1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
-c$$$     & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*
-c$$$     & (1 + d12*r12)**2) + (al13*(z1 - z3))/r13) + 
-c$$$     & (rho1 - rho2*Cos(phi1 - phi2))*(-((al1*rho1)/r1) - 
-c$$$     & (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
-c$$$     & (1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/
-c$$$     & (1+d12*r12)+(al12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
-c$$$     & (r12*(1 + d12*r12))+(al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13) + 
-c$$$     & rho2*Sin(phi1 - phi2)*((al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
-c$$$     & + (z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 
-c$$$     & 2*c12*r12)*Sin(phi1 - phi2))/(r12*(1 + d12*r12)**2) + 
-c$$$     & (al13*rho3*Sin(phi1 - phi3))/r13)))/(1 + d12*r12)**2 +
-c$$$     & (al12*z3*(-2-d12*r12)*(-2*(rho2-rho1*Cos(phi1-phi2))*(2*a*rho2
-c$$$     & *r12*(1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
-c$$$     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) - 
-c$$$     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
-c$$$     & (1 + c12*r12)*r23 + 2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
-c$$$     & (1+d12*r12)*r23+2*al12*r2*(rho2-rho1*Cos(phi1-phi2))*(1+c12*r12)*
-c$$$     & (1 + d12*r12)*r23 - 2*al2*rho2*r12*(1 + d12*r12)**2*r23)) + 
-c$$$     & 4*(z1 - z2)*(a*z2*r12*(1 + d12*r12)**2*r23 + (1 + a*r2)*
-c$$$     & (al23*r2*(z2-z3)*r12*(1+d12*r12)**2 + al12*d12*(z1 - z2)*r2*r12*
-c$$$     & (1 + c12*r12)*r23 - al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*
-c$$$     & r23 - al12*(z1 - z2)*r2*(1 + c12*r12)*(1 + d12*r12)*r23 - 
-c$$$     & al2*z2*r12*(1+d12*r12)**2*r23))+4*rho1*r2*(1+a*r2)*
-c$$$     & Sin(phi1-phi2)*(-(al12*rho1*r23*Sin(phi1 - phi2)) - 
-c$$$     & 2*al12*c12*rho1*r12*r23*Sin(phi1 - phi2) - al12*c12*d12*
-c$$$     & rho1*(r12**2)*r23*Sin(phi1-phi2)+al23*rho3*r12*Sin(phi2-phi3) + 
-c$$$     & 2*al23*d12*rho3*(r12**2)*Sin(phi2 - phi3) + al23*d12**2*rho3*
-c$$$     & (r12**2)**1.5*Sin(phi2 - phi3))))/(4.*r2*(z3 + a*r2*z3)*r12*
-c$$$     & (1 + d12*r12)**4*r23))
-c$$$
-c$$$      aK(9) = psi(1)*((2*al12*(6*c12*rho1**2 + c12*d12**2*rho1**4
-c$$$     & +6*c12*rho2**2+4*c12*d12**2*rho1**2*rho2**2+c12*d12**2*rho2**4
-c$$$     &+6*c12*z1**2+2*c12*d12**2*rho1**2*z1**2+2*c12*d12**2*rho2**2*z1**2
-c$$$     & +c12*d12**2*z1**4-12*c12*z1*z2-4*c12*d12**2*rho1**2*z1*z2
-c$$$     & -4*c12*d12**2*rho2**2*z1*z2-4*c12*d12**2*z1**3*z2 + 6*c12*z2**2
-c$$$     & +2*c12*d12**2*rho1**2*z2**2+2*c12*d12**2*rho2**2*z2**2
-c$$$     & +6*c12*d12**2*z1**2*z2**2-4*c12*d12**2*z1*z2**3+c12*d12**2*z2**4  
-c$$$     & + 3*r12 + 4*c12*d12*rho1**2*r12 + 4*c12*d12*rho2**2*r12 + 
-c$$$     & + 4*c12*d12*z1**2*r12-8*c12*d12*z1*z2*r12+4*c12*d12*z2**2*r12 - 
-c$$$     & 4*c12*rho1*rho2*Cos(phi1 - phi2)*(3 + d12**2*(rho1**2 + rho2**2
-c$$$     & + (z1 - z2)**2) + 2*d12*r12) + 2*c12*d12**2*rho1**2*rho2**2*
-c$$$     & Cos(2*(phi1 - phi2))))/(r12*(1 + d12*r12)**4)) ! Laplacian ends here
-c$$$     & + psi(1)*((al12*(2 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
-c$$$     & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 3*c12*r12)*((z1 - z2)*
-c$$$     & (1 + d12*r12)**2*(-((al1*z1)/r1) + (al12*(z1 - z2)*(1 + c12*d12*
-c$$$     & (rho1**2+rho2**2+(z1-z2)**2)-2*c12*d12*rho1*rho2*Cos(phi1-phi2) + 
-c$$$     & 2*c12*r12))/(r12*(1 + d12*r12)**2) + (al13*(z1 - z3))/r13) + 
-c$$$     & (rho1 - rho2*Cos(phi1 - phi2))*(1 + d12*r12)**2*
-c$$$     & (-((al1*rho1)/r1) - (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*
-c$$$     & (1 + c12*r12))/(1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*
-c$$$     & Cos(phi1 - phi2)))/(1 + d12*r12) + (al12*(rho1 - rho2*
-c$$$     & Cos(phi1 - phi2))*(1 + c12*r12))/(r12*(1 + d12*r12)) + 
-c$$$     & (al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13) + 
-c$$$     & (rho2*Sin(phi1 - phi2)*(al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
-c$$$     & + (z1 - z2)**2) + 2*c12*r12)*r13*Sin(phi1 - phi2) - 
-c$$$     & al12*c12*d12*rho1*rho2**2*r13*Sin(2*(phi1 - phi2)) + 
-c$$$     & al13*rho3*(2*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) + r12 + 
-c$$$     & d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 - 
-c$$$     & 2*d12*rho1*rho2*Cos(phi1-phi2)*(2+d12*r12))*Sin(phi1 - phi3)))/
-c$$$     & (r12*r13)))/(1 + d12*r12)**5 -0.25*(z3*(2*al12*rho2*(rho2 -
-c$$$     & rho1*Cos(phi1-phi2))*(-2 + 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) - 
-c$$$     & c12*(d12*(rho1**2 + rho2**2 + (z1-z2)**2)+3*r12))*(2*a*rho2*r12*
-c$$$     & (1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
-c$$$     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) - 
-c$$$     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*(1 + c12*r12)*
-c$$$     & r23 + 2*al12*c12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
-c$$$     & (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
-c$$$     & (1 + c12*r12)*(1 + d12*r12)*r23 - 2*al2*rho2*r12*(1+d12*r12)**2*
-c$$$     & r23)) + 4*al12*rho2*(z1 - z2)*(2 + c12*d12*(rho1**2 + rho2**2
-c$$$     & + (z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1-phi2)+3*c12*r12)*
-c$$$     & (a*z2*r12*(1 + d12*r12)**2*r23+(1+a*r2)*(al23*r2*(z2 - z3)*r12*
-c$$$     & (1 + d12*r12)**2 + al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*
-c$$$     & r23 - al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*r23 - al12*(z1-z2)*
-c$$$     & r2*(1 + c12*r12)*(1 + d12*r12)*r23 - al2*z2*r12*(1 + d12*r12)**2*
-c$$$     & r23)) + 4*al12*rho1*rho2*r2*(1 + a*r2)*(2 + c12*d12*(rho1**2
-c$$$     & + rho2**2+(z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 
-c$$$     & 3*c12*r12)*Sin(phi1 - phi2)*(-(al12*rho1*r23*Sin(phi1 - phi2)) - 
-c$$$     &2*al12*c12*rho1*r12*r23*Sin(phi1-phi2)-al12*c12*d12*rho1*(r12**2)*
-c$$$     & r23*Sin(phi1 - phi2) + al23*rho3*r12*Sin(phi2 - phi3) + 
-c$$$     & 2*al23*d12*rho3*(r12**2)*Sin(phi2 - phi3) + 
-c$$$     & al23*d12**2*rho3*(r12**2)**1.5*Sin(phi2 - phi3))))/
-c$$$     & (rho2*r2*(z3 + a*r2*z3)*r12*(1 + d12*r12)**5*r23))
-c$$$
-c$$$      aK(10)= - psi(1)*(2/r13) ! Laplacian ends here
-c$$$     &     - psi(1)*(((z1 - z3)*(-((al1*z1)/r1) +
-c$$$     & (al12*(z1 - z2)*(1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
-c$$$     & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*
-c$$$     & (1 + d12*r12)**2) + (al13*(z1 - z3))/r13) + (rho1 - rho3*
-c$$$     & Cos(phi1 - phi3))*(-((al1*rho1)/r1) - 
-c$$$     & (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
-c$$$     & (1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/
-c$$$     & (1 + d12*r12) + (al12*(rho1-rho2*Cos(phi1-phi2))*(1 + c12*r12))/
-c$$$     & (r12*(1 + d12*r12))+(al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13) + 
-c$$$     & rho3*Sin(phi1 - phi3)*((al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
-c$$$     & + (z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 
-c$$$     & 2*c12*r12)*Sin(phi1 - phi2))/(r12*(1 + d12*r12)**2) + 
-c$$$     & (al13*rho3*Sin(phi1 - phi3))/r13))/r13 +1/r13 - z1/(z3*r13) + 
-c$$$     & (al3*d3*rho3**2*(1 + c3*r3))/((1 + d3*r3)**2*r13) - 
-c$$$     & (al3*c3*rho3**2)/((1 + d3*r3)*r13)-(al3*rho3**2*(1 + c3*r3))/
-c$$$     & (r3*(1 + d3*r3)*r13) - (al3*d3*rho1*rho3*(1 + c3*r3)*
-c$$$     & Cos(phi1 - phi3))/((1 + d3*r3)**2*r13) + 
-c$$$     & (al3*c3*rho1*rho3*Cos(phi1 - phi3))/((1 + d3*r3)*r13) + 
-c$$$     & (al3*rho1*rho3*(1 + c3*r3)*Cos(phi1-phi3))/(r3*(1+d3*r3)*r13) + 
-c$$$     & (al13*rho3*(rho3 - rho1*Cos(phi1 - phi3)))/(r13**2) + 
-c$$$     & (al13*rho1*Cos(phi1-phi3)*(-rho3+rho1*Cos(phi1-phi3)))/(r13**2) + 
-c$$$     & (al23*rho3*(rho3 - rho2*Cos(phi2 - phi3)))/(r13*r23) - 
-c$$$     & (al23*rho1*Cos(phi1-phi3)*(rho3-rho2*Cos(phi2-phi3)))/(r13*r23) - 
-c$$$     & (z1*(-((al3*z3*(1 + d3*r3 + c3*(2*r3 + 3*d3*(r3**2)
-c$$$     &  + d3**2*(r3**2)**1.5)))/((1 + d3*r3)**2*(r3 + d3*
-c$$$     & (rho3**2+z3**2))))+(al13*(-z1+z3))/r13+(al23*(-z2+z3))/r23))/r13+ 
-c$$$     & (z3*(-((al3*z3*(1 + d3*r3 + c3*(2*r3 + 3*d3*(r3**2)
-c$$$     & + d3**2*(r3**2)**1.5)))/((1 + d3*r3)**2*(r3 + d3*
-c$$$     & (r3**2))))+(al13*(-z1+z3))/r13+(al23*(-z2+z3))/r23))/
-c$$$     & r13+rho1*Sin(phi1 - phi3)*((al13*rho1*Sin(phi1-phi3))/(r13**2) + 
-c$$$     &     (al23*rho2*Sin(phi2 - phi3))/(r13*r23)))
-c$$$
-c$$$      aK(11) = - psi(1)*(2/r23) ! Laplacian ends here
-c$$$     & - psi(1)*((z3*(2*(rho2 - rho3*Cos(phi2 - phi3))*(2*a*rho2*r12*
-c$$$     & (1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
-c$$$     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) - 
-c$$$     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
-c$$$     & (1 + c12*r12)*r23+2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
-c$$$     &     (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
-c$$$     & (1 + c12*r12)*(1 + d12*r12)*r23 - 2*al2*rho2*r12*(1+d12*r12)**2*
-c$$$     & r23)) + 4*(z2 - z3)*(a*z2*r12*(1 + d12*r12)**2*r23 + 
-c$$$     & (1 + a*r2)*(al23*r2*(z2 - z3)*r12*(1 + d12*r12)**2 + 
-c$$$     & al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*r23 - 
-c$$$     & al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*r23 - 
-c$$$     & al12*(z1 - z2)*r2*(1 + c12*r12)*(1 + d12*r12)*r23 - 
-c$$$     &     al2*z2*r12*(1 + d12*r12)**2*r23)) + 4*rho3*r2*(1 + a*r2)*
-c$$$     & Sin(phi2 - phi3)*(-(al12*rho1*r23*Sin(phi1 - phi2)) - 
-c$$$     & 2*al12*c12*rho1*r12*r23*Sin(phi1-phi2)-al12*c12*d12*rho1*
-c$$$     & (r12**2)*r23*Sin(phi1 - phi2) + al23*rho3*r12*Sin(phi2 - phi3) + 
-c$$$     & 2*al23*d12*rho3*(r12**2)*Sin(phi2 - phi3) + al23*d12**2*rho3*
-c$$$     & (r12**2)**1.5*Sin(phi2 - phi3))))/(4.*r2*(z3 + a*r2*z3)*r12*
-c$$$     & (1 + d12*r12)**2*(r23**2)) +1/r23 - z2/(z3*r23) + 
-c$$$     &  (al3*d3*rho3**2*(1 + c3*r3))/((1 + d3*r3)**2*r23) - 
-c$$$     & (al3*c3*rho3**2)/((1 + d3*r3)*r23) - (al3*rho3**2*(1 + c3*r3))/
-c$$$     & (r3*(1 + d3*r3)*r23)+(al13*rho3*(rho3 - rho1*Cos(phi1 - phi3)))/
-c$$$     & (r13*r23) - (al3*d3*rho2*rho3*(1 + c3*r3)*Cos(phi2 - phi3))/
-c$$$     & ((1 + d3*r3)**2*r23) + (al3*c3*rho2*rho3*Cos(phi2 - phi3))/
-c$$$     & ((1 + d3*r3)*r23) + (al3*rho2*rho3*(1 + c3*r3)*Cos(phi2 - phi3))/
-c$$$     & (r3*(1 + d3*r3)*r23) - (al13*rho2*(rho3 - rho1*Cos(phi1 - phi3))*
-c$$$     & Cos(phi2 - phi3))/(r13*r23) + (al23*rho3*(rho3 - rho2*
-c$$$     & Cos(phi2 - phi3)))/(r23**2) + (al23*rho2*Cos(phi2 - phi3)*(-rho3
-c$$$     & + rho2*Cos(phi2 - phi3)))/(r23**2) - (z2*(-((al3*z3*(1 + d3*r3
-c$$$     & + c3*(2*r3+3*d3*(rho3**2+z3**2)+d3**2*(r3**2)**1.5)))/
-c$$$     & ((1 + d3*r3)**2*(r3 + d3*(rho3**2+z3**2))))+(al13*(-z1+z3))/r13 + 
-c$$$     & (al23*(-z2 + z3))/r23))/r23 + (z3*(-((al3*z3*(1 + d3*r3 +
-c$$$     & c3*(2*r3+3*d3*(rho3**2+z3**2) + d3**2*(r3**2)**1.5)))/
-c$$$     & ((1 + d3*r3)**2*(r3 + d3*(r3**2)))) + 
-c$$$     & (al13*(-z1 + z3))/r13 + (al23*(-z2 + z3))/r23))/r23 + 
-c$$$     &  rho2*Sin(phi2 - phi3)*((al13*rho1*Sin(phi1 - phi3))/
-c$$$     & (r13*r23) + (al23*rho2*Sin(phi2 - phi3))/(r23**2)))
-c$$$      
+
+      aK(2)= 0.5*psi(1)*(2/r1) + ! Laplacian ends here
+     & psi(1)*((z1*(-((al1*z1)/r1)+(al12*(z1-z2)*(1+c12*d12*(rho1**2
+     & + rho2**2+(z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) +
+     & 2*c12*r12))/(r12*(1 + d12*r12)**2) + (al13*(z1 - z3))/r13))/r1 +
+     & (rho1*(-((al1*rho1)/r1)-(al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*
+     & (1 + c12*r12))/(1 + d12*r12)**2 +
+     & (al12*(rho1-rho2*Cos(phi1-phi2))*(1+c12*r12))/(r12*(1+d12*r12))
+     & + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/(1 + d12*r12) +
+     & (al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13))/r1)
+
+      aK(3)= 0.5*psi(1)*(2/r2) + ! Laplacian ends here
+     & psi(1)*((z3*(rho2*(2*a*rho2*r12*(1 + d12*r12)**2*r23 +
+     & (1 + a*r2)*(2*al23*r2*r12*(1 + d12*r12)**2*(rho2 - rho3*
+     & Cos(phi2 - phi3)) - 2*al12*d12*r2*(rho2-rho1*Cos(phi1 - phi2))*
+     & r12*(1+c12*r12)*r23+2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
+     & (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
+     & (1 + c12*r12)*(1 + d12*r12)*r23 - 2*al2*rho2*r12*
+     & (1 + d12*r12)**2*r23)) + 2*z2*(a*z2*r12*(1 + d12*r12)**2*
+     & r23 + (1 + a*r2)*(al23*r2*(z2 - z3)*r12*(1 + d12*r12)**2 +
+     & al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*r23 -
+     & al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*r23 - al12*(z1 - z2)*r2*
+     & (1 + c12*r12)*(1 + d12*r12)*r23 - al2*z2*r12*(1+d12*r12)**2*
+     & r23))))/(2.*(rho2**2+z2**2)*(z3+a*r2*z3)*r12*(1+d12*r12)**2*r23))
+
+      aK(4)= 0.5*psi(1)*((2+2*c3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))
+     & /(r3*(1 + d3*r3)**3)) + ! Laplacian ends here
+     & psi(1)*(((1 + 2*c3*r3+c3*d3*(r3**2))*((r3 + d3**2*(r3**2)**1.5 -
+     & d3*(r3**2)*(-2 + al3*c3*z3**2) - al3*z3**2*(1 + 2*c3*r3) +
+     & (al13*z3*(-z1 + z3)*(r3 + 2*d3*(r3**2)+d3**2*(r3**2)**1.5))/r13+
+     & (al23*z3*(-z2 + z3)*(r3 + 2*d3*(r3**2) + d3**2*(r3**2)**1.5))/
+     & r23)/(r3**2) + (rho3*(1 + d3*r3)**2*((al3*d3*rho3*(1 + c3*r3))/
+     & (1 + d3*r3)**2 - (al3*c3*rho3)/(1 + d3*r3) -(al3*rho3*(1+c3*r3))/
+     & (r3 + d3*(r3**2)) + (al13*(rho3 - rho1*Cos(phi1 - phi3)))/r13 +
+     & (al23*(rho3 - rho2*Cos(phi2 - phi3)))/r23))/r3))/(1 + d3*r3)**4)
+
+      aK(5)= 0.5*psi(1)*((2*al3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))/
+     & (r3*(1 + d3*r3)**3)) ! Laplacian ends here
+     & + psi(1)*((al3*(-2*al3*d3**2*rho3**2*r3*(1 + c3*r3)
+     & + 2*al3*c3*d3*rho3**2*r3*(1 + d3*r3) +6*al3*d3*rho3**2*(1+c3*r3)*
+     & (1 + d3*r3) - 2*d3*r3*(1 + d3*r3)**2 + 4*(1+d3*r3)**3 -
+     & 4*al3*c3*(rho3+d3*rho3*r3)**2-(4*al3*(1+c3*r3)*
+     & (rho3+d3*rho3*r3)**2)/r3 - (2*al13*d3*rho3*r3*(1 + d3*r3)**2*
+     & (rho3 - rho1*Cos(phi1 - phi3)))/r13 +
+     & (4*al13*rho3*(1 + d3*r3)**3*(rho3 - rho1*Cos(phi1 - phi3)))/r13 -
+     & (2*al23*d3*rho3*r3*(1+d3*r3)**2*(rho3 - rho2*Cos(phi2 - phi3)))/
+     & r23 + (4*al23*rho3*(1+d3*r3)**3*(rho3 - rho2*Cos(phi2 - phi3)))/
+     & r23 - 2*d3*z3*r3*(1 + d3*r3)**2*(-((al3*z3*(1 + d3*r3 + c3*(2*r3
+     & + 3*d3*(r3**2) + d3**2*(r3**2)**1.5)))/((1+d3*r3)**2*
+     & (r3+d3*(r3**2)))) + (al13*(-z1 + z3))/r13+(al23*(-z2+z3))/r23) +
+     & 4*z3*(1 + d3*r3)**3*(-((al3*z3*(1 + d3*r3 +
+     &  c3*(2*r3 + 3*d3*(r3**2) + d3**2*(r3**2)**1.5)))/((1 + d3*r3)**2*
+     & (r3 + d3*(r3**2)))) + (al13*(-z1 + z3))/r13 +
+     & (al23*(-z2 + z3))/r23)))/(2.*(1 + d3*r3)**4))
+
+
+      aK(6)= - 0.5*psi(1)*((2*al3*(3 + c3*(6*r3 + 4*d3*(r3**2)
+     &  + d3**2*(r3**2)**1.5)))/(1 + d3*r3)**4) ! Laplacian ends here
+     &  - psi(1)*((al3*(2 + 3*c3*r3 + c3*d3*(r3**2))*
+     & (al3*d3*rho3**2*(1 + c3*r3) - al3*c3*rho3**2*(1 + d3*r3) -
+     & (al3*(1 + c3*r3)*(rho3 + d3*rho3*r3)**2)/(r3 + d3*(r3**2)) +
+     & (al13*rho3*(1 + d3*r3)**2*(rho3 - rho1*Cos(phi1 - phi3)))/r13 +
+     &  (r3 + d3**2*(r3**2)**1.5 - d3*(r3**2)*(-2 + al3*c3*z3**2)
+     & -al3*z3**2*(1 + 2*c3*r3) - (al13*(z1 - z3)*z3*(r3 + 2*d3*(r3**2)
+     & + d3**2*(r3**2)**1.5))/r13)/r3 + (al23*z3*(-z2 + z3)*(r3 +
+     & 2*d3*(r3**2) + d3**2*(r3**2)**1.5))/(r3*r23) +  (al23*rho3*
+     & (1 + d3*r3)**2*(rho3-rho2*Cos(phi2-phi3)))/r23))/(1+d3*r3)**5)
+
+      aK(7)= - psi(1)*((2*(1 - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)*
+     & (3 + d12*r12)+c12*(3*d12*(rho1**2+rho2**2+(z1 - z2)**2) + 3*r12 +
+     & d12**2*(rho1**2+rho2**2+(z1-z2)**2)*r12)))/(r12*(1+d12*r12)**3)) ! Laplacian ends here
+     &  - psi(1)*(((1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
+     &  - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)+2*c12*r12)*(((z1-z2)*
+     & (1 + d12*r12)**2*(-((al1*z1)/Sqrt(rho1**2+z1**2))+(al12*(z1-z2)*
+     & (1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) - 2*c12*d12*rho1*
+     & rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*(1 + d12*r12)**2) +
+     & (al13*(z1 - z3))/r13))/r12 + ((rho1 - rho2*Cos(phi1 - phi2))*
+     & (1 + d12*r12)**2*(-((al1*rho1)/Sqrt(rho1**2 + z1**2)) -
+     & (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
+     & (1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/
+     & (1 + d12*r12) + (al12*(rho1 - rho2*Cos(phi1-phi2))*(1+c12*r12))/
+     & (r12*(1+d12*r12))+(al13*(rho1-rho3*Cos(phi1 - phi3)))/r13))/r12+
+     & (rho2*Sin(phi1 - phi2)*(al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
+     & + (z1 - z2)**2) + 2*c12*r12)*r13*Sin(phi1 - phi2) -
+     & al12*c12*d12*rho1*rho2**2*r13*Sin(2*(phi1 - phi2)) +
+     & al13*rho3*(2*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) + r12 +
+     & d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 -
+     & 2*d12*rho1*rho2*Cos(phi1-phi2)*(2 + d12*r12))*Sin(phi1 - phi3)))/
+     & ((r12**2)*r13)))/(1 + d12*r12)**4 +
+     & (z3*(-1 + 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)-c12*(d12*(rho1**2
+     & + rho2**2 + (z1 - z2)**2)+2*r12))*(-2*(rho2-rho1*Cos(phi1-phi2))*
+     & (2*a*rho2*r12*(1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
+     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) -
+     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*(1 + c12*r12)*
+     & r23 + 2*al12*c12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
+     & (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
+     & (1 + c12*r12)*(1 + d12*r12)*r23-2*al2*rho2*r12*(1+d12*r12)**2*
+     & r23)) + 4*(z1 - z2)*(a*z2*r12*(1 + d12*r12)**2*r23 +
+     & (1 + a*r2)*(al23*r2*(z2 - z3)*r12*(1 + d12*r12)**2 +
+     & al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*r23 - al12*c12*(z1 - z2)*
+     & r2*r12*(1 + d12*r12)*r23 - al12*(z1 - z2)*r2*(1 + c12*r12)*
+     & (1 + d12*r12)*r23 - al2*z2*r12*(1 + d12*r12)**2*r23)) +
+     & 4*rho1*r2*(1 + a*r2)*Sin(phi1 - phi2)*(-(al12*rho1*r23*
+     & Sin(phi1 - phi2)) - 2*al12*c12*rho1*r12*r23*Sin(phi1 - phi2) -
+     & al12*c12*d12*rho1*(r12**2)*r23*Sin(phi1 - phi2) +
+     & al23*rho3*r12*Sin(phi2 - phi3) + 2*al23*d12*rho3*(r12**2)*
+     & Sin(phi2-phi3)+al23*d12**2*rho3*(r12**2)**1.5*Sin(phi2-phi3))))/
+     & (4.*r2*(z3+a*r2*z3)*(rho1**2+rho2**2+(z1-z2)**2-2*rho1*rho2*
+     &     Cos(phi1 - phi2))*(1 + d12*r12)**4*r23))
+
+      aK(8) = - psi(1)*((2*al12*(3*d12*(rho1**2+rho2**2+(z1-z2)**2)
+     & + 3*r12 + d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 -
+     & 2*d12*rho1*rho2*Cos(phi1 - phi2)*(3 + d12*r12)))/(r12*
+     &     (1 + d12*r12)**3))   ! Laplacian ends here
+     & -psi(1)*((al12*(2+d12*r12)*((z1-z2)*(-((al1*z1)/r1)+
+     & (al12*(z1 - z2)*(1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
+     & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*
+     & (1 + d12*r12)**2) + (al13*(z1 - z3))/r13) +
+     & (rho1 - rho2*Cos(phi1 - phi2))*(-((al1*rho1)/r1) -
+     & (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
+     & (1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/
+     & (1+d12*r12)+(al12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
+     & (r12*(1 + d12*r12))+(al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13) +
+     & rho2*Sin(phi1 - phi2)*((al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
+     & + (z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) +
+     & 2*c12*r12)*Sin(phi1 - phi2))/(r12*(1 + d12*r12)**2) +
+     & (al13*rho3*Sin(phi1 - phi3))/r13)))/(1 + d12*r12)**2 +
+     & (al12*z3*(-2-d12*r12)*(-2*(rho2-rho1*Cos(phi1-phi2))*(2*a*rho2
+     & *r12*(1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
+     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) -
+     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
+     & (1 + c12*r12)*r23 + 2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
+     & (1+d12*r12)*r23+2*al12*r2*(rho2-rho1*Cos(phi1-phi2))*(1+c12*r12)*
+     & (1 + d12*r12)*r23 - 2*al2*rho2*r12*(1 + d12*r12)**2*r23)) +
+     & 4*(z1 - z2)*(a*z2*r12*(1 + d12*r12)**2*r23 + (1 + a*r2)*
+     & (al23*r2*(z2-z3)*r12*(1+d12*r12)**2 + al12*d12*(z1 - z2)*r2*r12*
+     & (1 + c12*r12)*r23 - al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*
+     & r23 - al12*(z1 - z2)*r2*(1 + c12*r12)*(1 + d12*r12)*r23 -
+     & al2*z2*r12*(1+d12*r12)**2*r23))+4*rho1*r2*(1+a*r2)*
+     & Sin(phi1-phi2)*(-(al12*rho1*r23*Sin(phi1 - phi2)) -
+     & 2*al12*c12*rho1*r12*r23*Sin(phi1 - phi2) - al12*c12*d12*
+     & rho1*(r12**2)*r23*Sin(phi1-phi2)+al23*rho3*r12*Sin(phi2-phi3) +
+     & 2*al23*d12*rho3*(r12**2)*Sin(phi2 - phi3) + al23*d12**2*rho3*
+     & (r12**2)**1.5*Sin(phi2 - phi3))))/(4.*r2*(z3 + a*r2*z3)*r12*
+     & (1 + d12*r12)**4*r23))
+
+      aK(9) = psi(1)*((2*al12*(6*c12*rho1**2 + c12*d12**2*rho1**4
+     & +6*c12*rho2**2+4*c12*d12**2*rho1**2*rho2**2+c12*d12**2*rho2**4
+     &+6*c12*z1**2+2*c12*d12**2*rho1**2*z1**2+2*c12*d12**2*rho2**2*z1**2
+     & +c12*d12**2*z1**4-12*c12*z1*z2-4*c12*d12**2*rho1**2*z1*z2
+     & -4*c12*d12**2*rho2**2*z1*z2-4*c12*d12**2*z1**3*z2 + 6*c12*z2**2
+     & +2*c12*d12**2*rho1**2*z2**2+2*c12*d12**2*rho2**2*z2**2
+     & +6*c12*d12**2*z1**2*z2**2-4*c12*d12**2*z1*z2**3+c12*d12**2*z2**4
+     & + 3*r12 + 4*c12*d12*rho1**2*r12 + 4*c12*d12*rho2**2*r12 +
+     & + 4*c12*d12*z1**2*r12-8*c12*d12*z1*z2*r12+4*c12*d12*z2**2*r12 -
+     & 4*c12*rho1*rho2*Cos(phi1 - phi2)*(3 + d12**2*(rho1**2 + rho2**2
+     & + (z1 - z2)**2) + 2*d12*r12) + 2*c12*d12**2*rho1**2*rho2**2*
+     & Cos(2*(phi1 - phi2))))/(r12*(1 + d12*r12)**4)) ! Laplacian ends here
+     & + psi(1)*((al12*(2 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
+     & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 3*c12*r12)*((z1 - z2)*
+     & (1 + d12*r12)**2*(-((al1*z1)/r1) + (al12*(z1 - z2)*(1 + c12*d12*
+     & (rho1**2+rho2**2+(z1-z2)**2)-2*c12*d12*rho1*rho2*Cos(phi1-phi2) +
+     & 2*c12*r12))/(r12*(1 + d12*r12)**2) + (al13*(z1 - z3))/r13) +
+     & (rho1 - rho2*Cos(phi1 - phi2))*(1 + d12*r12)**2*
+     & (-((al1*rho1)/r1) - (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*
+     & (1 + c12*r12))/(1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*
+     & Cos(phi1 - phi2)))/(1 + d12*r12) + (al12*(rho1 - rho2*
+     & Cos(phi1 - phi2))*(1 + c12*r12))/(r12*(1 + d12*r12)) +
+     & (al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13) +
+     & (rho2*Sin(phi1 - phi2)*(al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
+     & + (z1 - z2)**2) + 2*c12*r12)*r13*Sin(phi1 - phi2) -
+     & al12*c12*d12*rho1*rho2**2*r13*Sin(2*(phi1 - phi2)) +
+     & al13*rho3*(2*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) + r12 +
+     & d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 -
+     & 2*d12*rho1*rho2*Cos(phi1-phi2)*(2+d12*r12))*Sin(phi1 - phi3)))/
+     & (r12*r13)))/(1 + d12*r12)**5 -0.25*(z3*(2*al12*rho2*(rho2 -
+     & rho1*Cos(phi1-phi2))*(-2 + 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) -
+     & c12*(d12*(rho1**2 + rho2**2 + (z1-z2)**2)+3*r12))*(2*a*rho2*r12*
+     & (1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
+     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) -
+     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*(1 + c12*r12)*
+     & r23 + 2*al12*c12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
+     & (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
+     & (1 + c12*r12)*(1 + d12*r12)*r23 - 2*al2*rho2*r12*(1+d12*r12)**2*
+     & r23)) + 4*al12*rho2*(z1 - z2)*(2 + c12*d12*(rho1**2 + rho2**2
+     & + (z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1-phi2)+3*c12*r12)*
+     & (a*z2*r12*(1 + d12*r12)**2*r23+(1+a*r2)*(al23*r2*(z2 - z3)*r12*
+     & (1 + d12*r12)**2 + al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*
+     & r23 - al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*r23 - al12*(z1-z2)*
+     & r2*(1 + c12*r12)*(1 + d12*r12)*r23 - al2*z2*r12*(1 + d12*r12)**2*
+     & r23)) + 4*al12*rho1*rho2*r2*(1 + a*r2)*(2 + c12*d12*(rho1**2
+     & + rho2**2+(z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) +
+     & 3*c12*r12)*Sin(phi1 - phi2)*(-(al12*rho1*r23*Sin(phi1 - phi2)) -
+     &2*al12*c12*rho1*r12*r23*Sin(phi1-phi2)-al12*c12*d12*rho1*(r12**2)*
+     & r23*Sin(phi1 - phi2) + al23*rho3*r12*Sin(phi2 - phi3) +
+     & 2*al23*d12*rho3*(r12**2)*Sin(phi2 - phi3) +
+     & al23*d12**2*rho3*(r12**2)**1.5*Sin(phi2 - phi3))))/
+     & (rho2*r2*(z3 + a*r2*z3)*r12*(1 + d12*r12)**5*r23))
+
+      aK(10)= - psi(1)*(2/r13) ! Laplacian ends here
+     &     - psi(1)*(((z1 - z3)*(-((al1*z1)/r1) +
+     & (al12*(z1 - z2)*(1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
+     & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*
+     & (1 + d12*r12)**2) + (al13*(z1 - z3))/r13) + (rho1 - rho3*
+     & Cos(phi1 - phi3))*(-((al1*rho1)/r1) -
+     & (al12*d12*(rho1 - rho2*Cos(phi1 - phi2))*(1 + c12*r12))/
+     & (1 + d12*r12)**2 + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/
+     & (1 + d12*r12) + (al12*(rho1-rho2*Cos(phi1-phi2))*(1 + c12*r12))/
+     & (r12*(1 + d12*r12))+(al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13) +
+     & rho3*Sin(phi1 - phi3)*((al12*rho2*(1 + c12*d12*(rho1**2 + rho2**2
+     & + (z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) +
+     & 2*c12*r12)*Sin(phi1 - phi2))/(r12*(1 + d12*r12)**2) +
+     & (al13*rho3*Sin(phi1 - phi3))/r13))/r13 +1/r13 - z1/(z3*r13) +
+     & (al3*d3*rho3**2*(1 + c3*r3))/((1 + d3*r3)**2*r13) -
+     & (al3*c3*rho3**2)/((1 + d3*r3)*r13)-(al3*rho3**2*(1 + c3*r3))/
+     & (r3*(1 + d3*r3)*r13) - (al3*d3*rho1*rho3*(1 + c3*r3)*
+     & Cos(phi1 - phi3))/((1 + d3*r3)**2*r13) +
+     & (al3*c3*rho1*rho3*Cos(phi1 - phi3))/((1 + d3*r3)*r13) +
+     & (al3*rho1*rho3*(1 + c3*r3)*Cos(phi1-phi3))/(r3*(1+d3*r3)*r13) +
+     & (al13*rho3*(rho3 - rho1*Cos(phi1 - phi3)))/(r13**2) +
+     & (al13*rho1*Cos(phi1-phi3)*(-rho3+rho1*Cos(phi1-phi3)))/(r13**2) +
+     & (al23*rho3*(rho3 - rho2*Cos(phi2 - phi3)))/(r13*r23) -
+     & (al23*rho1*Cos(phi1-phi3)*(rho3-rho2*Cos(phi2-phi3)))/(r13*r23) -
+     & (z1*(-((al3*z3*(1 + d3*r3 + c3*(2*r3 + 3*d3*(r3**2)
+     &  + d3**2*(r3**2)**1.5)))/((1 + d3*r3)**2*(r3 + d3*
+     & (rho3**2+z3**2))))+(al13*(-z1+z3))/r13+(al23*(-z2+z3))/r23))/r13+
+     & (z3*(-((al3*z3*(1 + d3*r3 + c3*(2*r3 + 3*d3*(r3**2)
+     & + d3**2*(r3**2)**1.5)))/((1 + d3*r3)**2*(r3 + d3*
+     & (r3**2))))+(al13*(-z1+z3))/r13+(al23*(-z2+z3))/r23))/
+     & r13+rho1*Sin(phi1 - phi3)*((al13*rho1*Sin(phi1-phi3))/(r13**2) +
+     &     (al23*rho2*Sin(phi2 - phi3))/(r13*r23)))
+
+      aK(11) = - psi(1)*(2/r23) ! Laplacian ends here
+     & - psi(1)*((z3*(2*(rho2 - rho3*Cos(phi2 - phi3))*(2*a*rho2*r12*
+     & (1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
+     & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) -
+     & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
+     & (1 + c12*r12)*r23+2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
+     &     (1 + d12*r12)*r23 + 2*al12*r2*(rho2 - rho1*Cos(phi1 - phi2))*
+     & (1 + c12*r12)*(1 + d12*r12)*r23 - 2*al2*rho2*r12*(1+d12*r12)**2*
+     & r23)) + 4*(z2 - z3)*(a*z2*r12*(1 + d12*r12)**2*r23 +
+     & (1 + a*r2)*(al23*r2*(z2 - z3)*r12*(1 + d12*r12)**2 +
+     & al12*d12*(z1 - z2)*r2*r12*(1 + c12*r12)*r23 -
+     & al12*c12*(z1 - z2)*r2*r12*(1 + d12*r12)*r23 -
+     & al12*(z1 - z2)*r2*(1 + c12*r12)*(1 + d12*r12)*r23 -
+     &     al2*z2*r12*(1 + d12*r12)**2*r23)) + 4*rho3*r2*(1 + a*r2)*
+     & Sin(phi2 - phi3)*(-(al12*rho1*r23*Sin(phi1 - phi2)) -
+     & 2*al12*c12*rho1*r12*r23*Sin(phi1-phi2)-al12*c12*d12*rho1*
+     & (r12**2)*r23*Sin(phi1 - phi2) + al23*rho3*r12*Sin(phi2 - phi3) +
+     & 2*al23*d12*rho3*(r12**2)*Sin(phi2 - phi3) + al23*d12**2*rho3*
+     & (r12**2)**1.5*Sin(phi2 - phi3))))/(4.*r2*(z3 + a*r2*z3)*r12*
+     & (1 + d12*r12)**2*(r23**2)) +1/r23 - z2/(z3*r23) +
+     &  (al3*d3*rho3**2*(1 + c3*r3))/((1 + d3*r3)**2*r23) -
+     & (al3*c3*rho3**2)/((1 + d3*r3)*r23) - (al3*rho3**2*(1 + c3*r3))/
+     & (r3*(1 + d3*r3)*r23)+(al13*rho3*(rho3 - rho1*Cos(phi1 - phi3)))/
+     & (r13*r23) - (al3*d3*rho2*rho3*(1 + c3*r3)*Cos(phi2 - phi3))/
+     & ((1 + d3*r3)**2*r23) + (al3*c3*rho2*rho3*Cos(phi2 - phi3))/
+     & ((1 + d3*r3)*r23) + (al3*rho2*rho3*(1 + c3*r3)*Cos(phi2 - phi3))/
+     & (r3*(1 + d3*r3)*r23) - (al13*rho2*(rho3 - rho1*Cos(phi1 - phi3))*
+     & Cos(phi2 - phi3))/(r13*r23) + (al23*rho3*(rho3 - rho2*
+     & Cos(phi2 - phi3)))/(r23**2) + (al23*rho2*Cos(phi2 - phi3)*(-rho3
+     & + rho2*Cos(phi2 - phi3)))/(r23**2) - (z2*(-((al3*z3*(1 + d3*r3
+     & + c3*(2*r3+3*d3*(rho3**2+z3**2)+d3**2*(r3**2)**1.5)))/
+     & ((1 + d3*r3)**2*(r3 + d3*(rho3**2+z3**2))))+(al13*(-z1+z3))/r13 +
+     & (al23*(-z2 + z3))/r23))/r23 + (z3*(-((al3*z3*(1 + d3*r3 +
+     & c3*(2*r3+3*d3*(rho3**2+z3**2) + d3**2*(r3**2)**1.5)))/
+     & ((1 + d3*r3)**2*(r3 + d3*(r3**2)))) +
+     & (al13*(-z1 + z3))/r13 + (al23*(-z2 + z3))/r23))/r23 +
+     &  rho2*Sin(phi2 - phi3)*((al13*rho1*Sin(phi1 - phi3))/
+     & (r13*r23) + (al23*rho2*Sin(phi2 - phi3))/(r23**2)))
       
 c    
       return
@@ -1254,8 +1252,6 @@ c     Local Variables
       PV(i) = PV(i) - (UVP(i,2)+UVP(i,3)-Eav*UVP(i,1))*DPV(i)*alambda
       ENDDO
 
-c      print*, 'flag---->',UVP(1,:)
-c      print*, 'flag---->',-(UVP(1,2)+UVP(1,3)-Eav*UVP(1,1))
       
       end subroutine
 
@@ -1290,9 +1286,6 @@ c     variable psis receives values for Psi^prime_p and aKs for K_psi_p
      &    -psis(3,j)*(Va321+V)-psis(4,j)*(Va132+V)+
      &     psis(5,j)*(Va312+V)+psis(6,j)*(Va231+V))/den
 
-c     UVP(j,2) = UVP(j,2) + (psis(1,j)*(V)-psis(2,j)*(V)
-c     &    -psis(3,j)*(V)-psis(4,j)*(V)+
-c     &     psis(5,j)*(V)+psis(6,j)*(V))/den
 
       UVP(j,3) = UVP(j,3) + (aKs(1,j)-aKs(2,j)-aKs(3,j)-aKs(4,j)+
      &     aKs(5,j)+aKs(6,j))/den
