@@ -1,6 +1,9 @@
 # VMCLitio
-# This is a Fortran Package for the Optimization of Compact Wave Functions for the Litium Isoelectronic Suquence in the Quartet State (1s2s2p)
+# This is a Fortran Package for the Optimization of Compact Wave Functions for the Lithium Isoelectronic Suquence in the Quartet State (1s2s2p)
 
+clone as:
+
+git clone https://github.com/djuliannader/VMCLitio.git
 
 compile as:
 

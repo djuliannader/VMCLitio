@@ -11,7 +11,7 @@ c
 c
       DOUBLE PRECISION, allocatable :: PV(:), deltaPV(:)
 
-      character(10), allocatable :: text(:) 
+      character(15), allocatable :: text(:) 
 
       COMMON / XINPUT1 /  Bx, Z, N, NPV, ms
       COMMON / DELTA/  deltarho, deltaphi, deltaz, alambda
@@ -73,14 +73,14 @@ c     Writting data
       write(6,*)'******* Initial Variational Parameters**********'
       write(6,*)'name         initial value          fixed/released  '
       Do i=1,NPV
-         write(*,*)text(i), PV(i), deltaPV(i)
+         write(6,*)text(i),PV(i), deltaPV(i)
       Enddo
       write(6,*)'***********************************'
 
 c
 c     Variational Monte Carlo performed here
       call cpu_time(start)
-      call FCNE(PV,deltaPV)
+      call FCNE(PV,deltaPV,text)
       call cpu_time(finish)
 c
 c
@@ -104,7 +104,7 @@ c     Variational Energy for the
 c
 c     XV: Array of Variational Parameters 
 c
-      SUBROUTINE FCNE(XV,DPV)
+      SUBROUTINE FCNE(XV,DPV,namespv)
       IMPLICIT  DOUBLE PRECISION(A-H,O-Z)
 c     .. COMMON BLOCK FROM INPUT DATA ...
       COMMON / XINPUT1 /  Bx, Z, N, NPV, ms
@@ -116,6 +116,7 @@ c     .. COMMON BLOCK FROM INPUT DATA ...
       INTEGER          NDIM
       DOUBLE PRECISION   PV(NPV)
 
+      character(15)  namespv(NPV) 
 c
             
 
@@ -190,7 +191,7 @@ c
 c
       if(icall.EQ.1)then
       write(*,*)'------------------------------------------------'
-      write(*,*)'Acceptation ratio ', ta
+      write(*,*)'Acceptance ratio ', ta
       write(*,*)'------------------------------------------------'      
       end if
 
@@ -216,21 +217,12 @@ c
       write(6,*)'Error  =',error,'au'
       write(6,*)'AC time=',tc,'iterations'
       write(6,*)'ratio Ms/AC t=',ms/tc,'>100 or tune Ms (input file)'
-      write(6,*)
-c
-      write(6,111)' a       =',a
-      write(6,111)' alfa1   =',alfa1
-      write(6,111)' alfa2   =',alfa2
-      write(6,111)' alfa3   =',alfa3
-      write(6,111)' c3      =',c3
-      write(6,111)' d3      =',d3
-      write(6,111)' alfa12  =',alfa12
-      write(6,111)' c12     =',c12
-      write(6,111)' d12     =',d12     
-      write(6,111)' alfa13  =',alfa13
-      write(6,111)' alfa23  =',alfa23
-      write(6,*)'****************************************************'
- 
+      write(6,*)'variational parameters'
+            Do i=1,NPV
+               write(6,*)namespv(i),real(PV(i))
+            Enddo
+      write(6,*)'***********************************'
+      
       
 c
  111   format(A20,2x,F12.8)
@@ -260,6 +252,8 @@ c
 c     Local Variables
       DOUBLE PRECISION coor1(3), coor2(3), coor1t(3), coor2t(3)
       DOUBLE PRECISION coor3(3), coor3t(3)
+
+
       
       DOUBLE PRECISION :: PV(NPV),DPV(NPV),UVP(NPV,3)
 c

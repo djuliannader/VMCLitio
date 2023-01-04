@@ -1,6 +1,6 @@
-Nuclear charge
+Nuclear charge (Z)
 3.0D0
-Maximum change in the configuration (deltarho, deltaphi, deltaz)
+Maximum change in the coordinates (deltarho, deltaphi, deltaz)
 0.48D0  0.12D0  0.48D0 
 Metropolis Iterations (N)
 1000000
