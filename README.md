@@ -1,2 +1,8 @@
 # VMCLitio
-# This is a fortran package for the Optimization of compact wavefunctions for the Litium quartet state (1s2s2p)
+# This is a Fortran Package for the Optimization of Compact Wave Functions for the Litium Isoelectronic Suquence in the Quartet State (1s2s2p)
+
+
+compile as:
+
+gfortran -o name.exe src/MetropolisLiQuartetPV3_f.f -w
+gfortran -o name.exe src/MetropolisLiQuartetPV3_cusp_f.f -w
