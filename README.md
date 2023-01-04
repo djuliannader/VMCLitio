@@ -5,4 +5,9 @@
 compile as:
 
 gfortran -o name.exe src/MetropolisLiQuartetPV3_f.f -w
+
 gfortran -o name.exe src/MetropolisLiQuartetPV3_cusp_f.f -w
+
+run as:
+
+name.exe < input.dat > output.dat &
