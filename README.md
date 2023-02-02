@@ -16,4 +16,4 @@ run as:
 
 name.exe < input.dat > output.dat &
 
-For user manual and data see directory dat
+For user manual and data see directory docs
