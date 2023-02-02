@@ -15,3 +15,5 @@ gfortran -o name.exe src/MetropolisLiQuartetPV3_cusp_f.f -w
 run as:
 
 name.exe < input.dat > output.dat &
+
+For user manual and data see directory dat
