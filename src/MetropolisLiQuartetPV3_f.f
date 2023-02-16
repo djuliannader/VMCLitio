@@ -808,8 +808,8 @@ c     Calculating Psi^prime_p
 
       if (abs(1+a*r2)> 0.000001) then
           psip(1) =  1.0*(r2/(1+a*r2))*psi(1)
-          aK(1)= - 0.5*psi(1)*(2/(r2*(1 + a*r2)**3))    ! Laplacian ends here
-     & - 1.0*psi(1)*((z3*(rho2*(2*a*rho2*r12*(1 + d12*r12)**2*r23 + 
+          aK(1)=  0.5*psi(1)*(2/(r2*(1 + a*r2)**3))    ! Laplacian ends here
+     & + 1.0*psi(1)*((z3*(rho2*(2*a*rho2*r12*(1 + d12*r12)**2*r23 + 
      & (1 + a*r2)*(2*al23*r2*r12*(1 + d12*r12)**2*(rho2 - rho3*
      & Cos(phi2-phi3))-2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
      & (1 + c12*r12)*r23 + 2*al12*c12*r2*(rho2-rho1*Cos(phi1-phi2))*r12*
@@ -830,7 +830,7 @@ c     Calculating K_psi_p
 
 
       
-      aK(2)= 0.5*psi(1)*(2/r1) + ! Laplacian ends here
+      aK(2)= - 0.5*psi(1)*(2/r1) - ! Laplacian ends here
      & psi(1)*((z1*(-((al1*z1)/r1)+(al12*(z1-z2)*(1+c12*d12*(rho1**2
      & + rho2**2+(z1 - z2)**2) - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 
      & 2*c12*r12))/(r12*(1 + d12*r12)**2) + (al13*(z1 - z3))/r13))/r1 + 
@@ -840,7 +840,7 @@ c     Calculating K_psi_p
      & + (al12*c12*(rho1 - rho2*Cos(phi1 - phi2)))/(1 + d12*r12) + 
      & (al13*(rho1 - rho3*Cos(phi1 - phi3)))/r13))/r1)
 
-      aK(3)= 0.5*psi(1)*(2/r2) + ! Laplacian ends here
+      aK(3)= - 0.5*psi(1)*(2/r2) - ! Laplacian ends here
      & psi(1)*((z3*(rho2*(2*a*rho2*r12*(1 + d12*r12)**2*r23 + 
      & (1 + a*r2)*(2*al23*r2*r12*(1 + d12*r12)**2*(rho2 - rho3*
      & Cos(phi2 - phi3)) - 2*al12*d12*r2*(rho2-rho1*Cos(phi1 - phi2))*
@@ -854,8 +854,8 @@ c     Calculating K_psi_p
      & (1 + c12*r12)*(1 + d12*r12)*r23 - al2*z2*r12*(1+d12*r12)**2*
      & r23))))/(2.*(rho2**2+z2**2)*(z3+a*r2*z3)*r12*(1+d12*r12)**2*r23))
       
-      aK(4)= 0.5*psi(1)*((2+2*c3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))
-     & /(r3*(1 + d3*r3)**3)) + ! Laplacian ends here
+      aK(4)=-0.5*psi(1)*((2+2*c3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))
+     & /(r3*(1 + d3*r3)**3)) - ! Laplacian ends here
      & psi(1)*(((1 + 2*c3*r3+c3*d3*(r3**2))*((r3 + d3**2*(r3**2)**1.5 -
      & d3*(r3**2)*(-2 + al3*c3*z3**2) - al3*z3**2*(1 + 2*c3*r3) + 
      & (al13*z3*(-z1 + z3)*(r3 + 2*d3*(r3**2)+d3**2*(r3**2)**1.5))/r13+ 
@@ -865,9 +865,9 @@ c     Calculating K_psi_p
      & (r3 + d3*(r3**2)) + (al13*(rho3 - rho1*Cos(phi1 - phi3)))/r13 + 
      & (al23*(rho3 - rho2*Cos(phi2 - phi3)))/r23))/r3))/(1 + d3*r3)**4)
       
-      aK(5)= 0.5*psi(1)*((2*al3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))/
+      aK(5)=-0.5*psi(1)*((2*al3*(3*r3+3*d3*(r3**2)+d3**2*(r3**2)**1.5))/
      & (r3*(1 + d3*r3)**3)) ! Laplacian ends here
-     & + psi(1)*((al3*(-2*al3*d3**2*rho3**2*r3*(1 + c3*r3)
+     & - psi(1)*((al3*(-2*al3*d3**2*rho3**2*r3*(1 + c3*r3)
      & + 2*al3*c3*d3*rho3**2*r3*(1 + d3*r3) +6*al3*d3*rho3**2*(1+c3*r3)*
      & (1 + d3*r3) - 2*d3*r3*(1 + d3*r3)**2 + 4*(1+d3*r3)**3 -
      & 4*al3*c3*(rho3+d3*rho3*r3)**2-(4*al3*(1+c3*r3)*
@@ -885,9 +885,9 @@ c     Calculating K_psi_p
      & (al23*(-z2 + z3))/r23)))/(2.*(1 + d3*r3)**4))
      
 
-      aK(6)= - 0.5*psi(1)*((2*al3*(3 + c3*(6*r3 + 4*d3*(r3**2)
+      aK(6)=  0.5*psi(1)*((2*al3*(3 + c3*(6*r3 + 4*d3*(r3**2)
      &  + d3**2*(r3**2)**1.5)))/(1 + d3*r3)**4) ! Laplacian ends here
-     &  - psi(1)*((al3*(2 + 3*c3*r3 + c3*d3*(r3**2))*
+     &  + psi(1)*((al3*(2 + 3*c3*r3 + c3*d3*(r3**2))*
      & (al3*d3*rho3**2*(1 + c3*r3) - al3*c3*rho3**2*(1 + d3*r3) - 
      & (al3*(1 + c3*r3)*(rho3 + d3*rho3*r3)**2)/(r3 + d3*(r3**2)) + 
      & (al13*rho3*(1 + d3*r3)**2*(rho3 - rho1*Cos(phi1 - phi3)))/r13 + 
@@ -897,10 +897,10 @@ c     Calculating K_psi_p
      & 2*d3*(r3**2) + d3**2*(r3**2)**1.5))/(r3*r23) +  (al23*rho3*
      & (1 + d3*r3)**2*(rho3-rho2*Cos(phi2-phi3)))/r23))/(1+d3*r3)**5)
       
-      aK(7)= - psi(1)*((2*(1 - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)*
+      aK(7)=  psi(1)*((2*(1 - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)*
      & (3 + d12*r12)+c12*(3*d12*(rho1**2+rho2**2+(z1 - z2)**2) + 3*r12 + 
      & d12**2*(rho1**2+rho2**2+(z1-z2)**2)*r12)))/(r12*(1+d12*r12)**3)) ! Laplacian ends here
-     &  - psi(1)*(((1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
+     &  + psi(1)*(((1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
      &  - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2)+2*c12*r12)*(((z1-z2)*
      & (1 + d12*r12)**2*(-((al1*z1)/Sqrt(rho1**2+z1**2))+(al12*(z1-z2)*
      & (1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2) - 2*c12*d12*rho1*
@@ -939,11 +939,11 @@ c     Calculating K_psi_p
      & (4.*r2*(z3+a*r2*z3)*(rho1**2+rho2**2+(z1-z2)**2-2*rho1*rho2*
      &     Cos(phi1 - phi2))*(1 + d12*r12)**4*r23))
 
-      aK(8) = - psi(1)*((2*al12*(3*d12*(rho1**2+rho2**2+(z1-z2)**2)
+      aK(8) = psi(1)*((2*al12*(3*d12*(rho1**2+rho2**2+(z1-z2)**2)
      & + 3*r12 + d12**2*(rho1**2 + rho2**2 + (z1 - z2)**2)*r12 - 
      & 2*d12*rho1*rho2*Cos(phi1 - phi2)*(3 + d12*r12)))/(r12*
      &     (1 + d12*r12)**3))   ! Laplacian ends here
-     & -psi(1)*((al12*(2+d12*r12)*((z1-z2)*(-((al1*z1)/r1)+
+     & +psi(1)*((al12*(2+d12*r12)*((z1-z2)*(-((al1*z1)/r1)+
      & (al12*(z1 - z2)*(1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
      & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*
      & (1 + d12*r12)**2) + (al13*(z1 - z3))/r13) + 
@@ -975,7 +975,7 @@ c     Calculating K_psi_p
      & (r12**2)**1.5*Sin(phi2 - phi3))))/(4.*r2*(z3 + a*r2*z3)*r12*
      & (1 + d12*r12)**4*r23))
 
-      aK(9) = psi(1)*((2*al12*(6*c12*rho1**2 + c12*d12**2*rho1**4
+      aK(9) = - psi(1)*((2*al12*(6*c12*rho1**2 + c12*d12**2*rho1**4
      & +6*c12*rho2**2+4*c12*d12**2*rho1**2*rho2**2+c12*d12**2*rho2**4
      &+6*c12*z1**2+2*c12*d12**2*rho1**2*z1**2+2*c12*d12**2*rho2**2*z1**2
      & +c12*d12**2*z1**4-12*c12*z1*z2-4*c12*d12**2*rho1**2*z1*z2
@@ -987,7 +987,7 @@ c     Calculating K_psi_p
      & 4*c12*rho1*rho2*Cos(phi1 - phi2)*(3 + d12**2*(rho1**2 + rho2**2
      & + (z1 - z2)**2) + 2*d12*r12) + 2*c12*d12**2*rho1**2*rho2**2*
      & Cos(2*(phi1 - phi2))))/(r12*(1 + d12*r12)**4)) ! Laplacian ends here
-     & + psi(1)*((al12*(2 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
+     & - psi(1)*((al12*(2 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
      & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 3*c12*r12)*((z1 - z2)*
      & (1 + d12*r12)**2*(-((al1*z1)/r1) + (al12*(z1 - z2)*(1 + c12*d12*
      & (rho1**2+rho2**2+(z1-z2)**2)-2*c12*d12*rho1*rho2*Cos(phi1-phi2) + 
@@ -1028,8 +1028,8 @@ c     Calculating K_psi_p
      & al23*d12**2*rho3*(r12**2)**1.5*Sin(phi2 - phi3))))/
      & (rho2*r2*(z3 + a*r2*z3)*r12*(1 + d12*r12)**5*r23))
 
-      aK(10)= - psi(1)*(2/r13) ! Laplacian ends here
-     &     - psi(1)*(((z1 - z3)*(-((al1*z1)/r1) +
+      aK(10)=  psi(1)*(2/r13) ! Laplacian ends here
+     &     + psi(1)*(((z1 - z3)*(-((al1*z1)/r1) +
      & (al12*(z1 - z2)*(1 + c12*d12*(rho1**2 + rho2**2 + (z1 - z2)**2)
      & - 2*c12*d12*rho1*rho2*Cos(phi1 - phi2) + 2*c12*r12))/(r12*
      & (1 + d12*r12)**2) + (al13*(z1 - z3))/r13) + (rho1 - rho3*
@@ -1061,8 +1061,8 @@ c     Calculating K_psi_p
      & r13+rho1*Sin(phi1 - phi3)*((al13*rho1*Sin(phi1-phi3))/(r13**2) + 
      &     (al23*rho2*Sin(phi2 - phi3))/(r13*r23)))
 
-      aK(11) = - psi(1)*(2/r23) ! Laplacian ends here
-     & - psi(1)*((z3*(2*(rho2 - rho3*Cos(phi2 - phi3))*(2*a*rho2*r12*
+      aK(11) =  psi(1)*(2/r23) ! Laplacian ends here
+     & + psi(1)*((z3*(2*(rho2 - rho3*Cos(phi2 - phi3))*(2*a*rho2*r12*
      & (1 + d12*r12)**2*r23 + (1 + a*r2)*(2*al23*r2*r12*
      & (1 + d12*r12)**2*(rho2 - rho3*Cos(phi2 - phi3)) - 
      & 2*al12*d12*r2*(rho2 - rho1*Cos(phi1 - phi2))*r12*
@@ -1224,7 +1224,7 @@ c     Local Variables
 
       
       Do i=1, NPV
-      PV(i) = PV(i) - (UVP(i,2)+UVP(i,3)-Eav*UVP(i,1))*DPV(i)*alambda
+      PV(i) = PV(i) - (UVP(i,2)-UVP(i,3)-Eav*UVP(i,1))*DPV(i)*alambda
       ENDDO
 
 c      print*, 'flag---->',UVP(1,:)
