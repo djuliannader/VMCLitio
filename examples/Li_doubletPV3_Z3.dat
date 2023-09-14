@@ -1,0 +1,143 @@
+Nuclear charge
+3.0D0
+Maximum change in the configuration (deltarho, deltaphi, deltaz)
+0.32D0  0.1D0  0.32D0 
+Metropolis Iterations 
+10000000
+Subiterations (Ms)
+10000
+Iterations for wavefunction optimization
+20
+Lambda
+1.0
+
+
+PARAMETERSg
+10
+'c     '    0.00000000    0.01
+'a     '    0.50000000    0.5
+'alfa1 '    2.31824051    1.0
+'alfa2 '    3.30227015    1.0
+'alfa3 '    0.58338977    1.0
+'alfa12'    0.00000000    0.5
+'c12   '    0.00000000    0.1
+'d12   '    0.00000000    0.1
+'alfa13'    0.00000000    0.2
+'alfa23'    0.00000000    0.2
+
+
+
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+
+        
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+   
+
+AnsatzA (optimo)
+0.000161
+0.000000                           
+2.348060
+3.303136
+0.556262
+0.215718
+0.036669
+0.012727
+
+
+
+
+
+
+
+             
+             
+             
+           
+             
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+        
+             
+             
+	     
+                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+  
